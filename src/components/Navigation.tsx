@@ -1,5 +1,6 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 const StyledNavigation = styled("div")`
   padding: 10px;
@@ -48,11 +49,14 @@ const Navigation = () => {
           </Typography>
         </Box>
         <Box className="menu-links">
-          <Typography className="text" variant="subtitle1">
-            Chat
-          </Typography>
-          <Button className="btn-login">Login</Button>
-          {/* <Button variant="outlined">Register</Button> */}
+          <Link to={"/"}>
+            <Typography className="text" variant="subtitle1">
+              Chat
+            </Typography>
+          </Link>
+          <Link to={"/login"}>
+            <Button className="btn-login">Login</Button>
+          </Link>
         </Box>
       </Container>
     </StyledNavigation>

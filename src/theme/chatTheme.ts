@@ -11,7 +11,7 @@ const chatTheme = createTheme({
             
         },
         primary: {
-            main: "#42516a",
+            main: "#2f2e41",
         },
         secondary: {
             main: "#e9d5d8"
