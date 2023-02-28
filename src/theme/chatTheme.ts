@@ -7,14 +7,14 @@ const chatTheme = createTheme({
             paper: "#fff"
         },
         text :{
-            primary: "#000000",
+            primary: "#2f2e41",
             
         },
         primary: {
-            main: "#BB5A3A",
+            main: "#42516a",
         },
         secondary: {
-            main: "#58524d"
+            main: "#e9d5d8"
         }
     },
     typography : {
