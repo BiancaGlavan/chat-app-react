@@ -1,35 +1,38 @@
 import { Box, Button, Container, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 const StyledLoginPage = styled("div")`
   background: ${(props) => props.theme.palette.background.default};
-  padding-top: 50px;
+  padding-top: 80px;
 
   .login-container {
-    display: flex;
-    justify-content: space-around;
-    padding-top: 100px;
-
-    img {
-      width: 400px;
+    ${(props) => props.theme.breakpoints.up("md")} {
+      display: flex;
+      gap: 50px;
+      img {
+        width: 400px;
+      }
     }
+  }
+
+  .login-wrapper {
+    flex-grow: 1;
   }
 
   .login {
     display: flex;
     flex-direction: column;
     gap: 50px;
-    max-width: 400px;
+    max-width: 500px;
     color: ${(props) => props.theme.palette.text.primary};
   }
 
   .register {
-    display: flex;
-    gap: 5px;
     padding-top: 30px;
     color: ${(props) => props.theme.palette.text.primary};
 
-    .register-text {
+    .register-link {
       font-weight: 500;
     }
   }
@@ -42,16 +45,20 @@ const LoginPage = () => {
   return (
     <StyledLoginPage className="LoginPage">
       <Container className="login-container">
-        <Box>
+        <Box className="login-wrapper">
           <Box className="login">
             <TextField type="text" label="Username" variant="outlined" autoComplete="off" />
             <TextField type="password" label="Password" variant="outlined" autoComplete="off" />
-            <Button variant="contained">Login</Button>
+            <Button variant="contained" size="large">
+              Login
+            </Button>
           </Box>
           <Box className="register">
-            <Typography variant="body1">Don't have an account?</Typography>
-            <Typography className="register-text" variant="body1">
-              Register
+            <Typography variant="body1">
+              Don't have an account?{" "}
+              <Link className="register-link" to={"/register"}>
+                Register
+              </Link>
             </Typography>
           </Box>
         </Box>
