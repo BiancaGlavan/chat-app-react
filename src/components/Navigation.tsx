@@ -29,10 +29,10 @@ const StyledNavigation = styled("div")`
 
   .text {
     color: ${(props) => props.theme.palette.text.primary};
-    font-weight: 500;
+    font-weight: 600;
   }
 
-  .btn-login {
+  .btn-link {
     font-weight: 600;
     color: ${(props) => props.theme.palette.text.primary};
   }
@@ -50,12 +50,12 @@ const Navigation = () => {
         </Box>
         <Box className="menu-links">
           <Link to={"/"}>
-            <Typography className="text" variant="subtitle1">
-              Chat
-            </Typography>
+            <Button className="btn-link" >
+              Join
+            </Button>
           </Link>
           <Link to={"/login"}>
-            <Button className="btn-login">Login</Button>
+            <Button className="btn-link">Login</Button>
           </Link>
         </Box>
       </Container>

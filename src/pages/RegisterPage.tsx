@@ -1,4 +1,15 @@
-import { Avatar, Badge, Box, Button, Container, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { Link } from "react-router-dom";
@@ -8,11 +19,25 @@ const StyledRegisterPage = styled("div")`
   padding-top: 50px;
   padding-bottom: 50px;
 
+  .register-container {
+    ${(props) => props.theme.breakpoints.up("md")} {
+      display: flex;
+      gap: 50px;
+      img {
+        width: 400px;
+      }
+    }
+  }
+
+  .register-wrapper {
+    flex-grow: 1;
+  }
+
   .register {
     color: ${(props) => props.theme.palette.text.primary};
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 30px;
     max-width: 500px;
   }
 
@@ -31,37 +56,43 @@ const StyledRegisterPage = styled("div")`
 `;
 
 const RegisterPage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <StyledRegisterPage className="RegisterPage">
       <Container className="register-container">
-        <Box className="register">
-          <Box className="profile-pic-container">
-            <Badge
-              overlap="circular"
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              badgeContent={
-                <IconButton>
-                  <AddPhotoAlternateIcon className="icon" />
-                </IconButton>
-              }
-            >
-              <Avatar className="avatar" alt="avatar" src="./images/avatar.jpg" />
-            </Badge>
+        <Box className="register-wrapper">
+          <Box className="register">
+            <Box className="profile-pic-container">
+              <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                badgeContent={
+                  <IconButton>
+                    <AddPhotoAlternateIcon className="icon" />
+                  </IconButton>
+                }
+              >
+                <Avatar className="avatar" alt="avatar" src="./images/avatar.jpg" />
+              </Badge>
+            </Box>
+            <Typography variant="h6">Create Account</Typography>
+            <TextField type="text" label="Username" variant="outlined" autoComplete="off" />
+            <TextField type="email" label="Email" variant="outlined" autoComplete="off" />
+            <TextField type="password" label="Password" variant="outlined" autoComplete="off" />
+            <Button variant="contained" size="large">
+              Register
+            </Button>
+            <Typography>
+              Already have an account?{" "}
+              <Link className="login-link" to={"/login"}>
+                Login
+              </Link>
+            </Typography>
           </Box>
-          <Typography variant="h6">Create Account</Typography>
-          <TextField type="text" label="Username" variant="outlined" autoComplete="off" />
-          <TextField type="email" label="Email" variant="outlined" autoComplete="off" />
-          <TextField type="password" label="Password" variant="outlined" autoComplete="off" />
-          <Button variant="contained" size="large">
-            Register
-          </Button>
-          <Typography>
-            Already have an account?{" "}
-            <Link className="login-link" to={"/login"}>
-              Login
-            </Link>
-          </Typography>
         </Box>
+        {!isMobile && <img src="./images/Texting.svg" alt="" />}
       </Container>
     </StyledRegisterPage>
   );

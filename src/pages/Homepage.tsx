@@ -1,5 +1,6 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 const StyledHomepage = styled("div")`
   height: calc(100vh - 60px);
@@ -52,7 +53,7 @@ const Homepage = () => {
         <Box className="greetings">
           <Typography variant="h6">Connect with friends</Typography>
           <Typography variant="subtitle2">ChatApp lets you connect with the world</Typography>
-          <Button variant="contained">Get started</Button>
+          <Link to={'/register'}><Button variant="contained">Get started</Button></Link>
         </Box>
         <Box className="illustration">
 					<img src="./images/Begin-chat.svg" alt="illustration" />
