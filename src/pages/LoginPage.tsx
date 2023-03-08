@@ -1,6 +1,10 @@
 import { Box, Button, Container, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../redux/features/apiSlice";
+import { login, setUser } from "../redux/features/authSlice";
+import { useAppDispatch } from "../redux/hooks";
 
 const StyledLoginPage = styled("div")`
   background: ${(props) => props.theme.palette.background.default};
@@ -39,17 +43,56 @@ const StyledLoginPage = styled("div")`
 `;
 
 const LoginPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const [loginUser, response] = useLoginUserMutation();
+  const { data: loginResponse, isSuccess, isLoading } = response;
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    const currentUser = {
+      username: username,
+      password: password,
+    };
+    loginUser({ data: currentUser });
+  }
+
+  useEffect(() => {
+    if(isSuccess) {
+      dispatch(login(loginResponse.access_token));
+      dispatch(setUser(loginResponse.user))
+      navigate('/conversations');
+    }
+  }, [loginResponse, isSuccess])
 
   return (
     <StyledLoginPage className="LoginPage">
       <Container className="login-container">
         <Box className="login-wrapper">
           <Box className="login">
-            <TextField type="text" label="Username" variant="outlined" autoComplete="off" />
-            <TextField type="password" label="Password" variant="outlined" autoComplete="off" />
-            <Button variant="contained" size="large">
+            <TextField
+              type="text"
+              label="Username"
+              variant="outlined"
+              autoComplete="off"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              type="password"
+              label="Password"
+              variant="outlined"
+              autoComplete="off"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button variant="contained" size="large" onClick={handleLogin}>
               Login
             </Button>
           </Box>
