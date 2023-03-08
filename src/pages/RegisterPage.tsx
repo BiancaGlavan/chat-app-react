@@ -12,7 +12,11 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRegisterUserMutation } from "../redux/features/apiSlice";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../redux/hooks";
+import { login, setUser } from "../redux/features/authSlice";
 
 const StyledRegisterPage = styled("div")`
   background: ${(props) => props.theme.palette.background.default};
@@ -56,8 +60,32 @@ const StyledRegisterPage = styled("div")`
 `;
 
 const RegisterPage = () => {
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const [registerUser, response] = useRegisterUserMutation();
+  const { data: registerResponse, isLoading, isSuccess } = response;
+
+  const handleRegister = () => {
+    const user = {
+      username: username,
+      password: password,
+    };
+
+    registerUser({ data: user });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(login(registerResponse.access_token));
+      dispatch(setUser(registerResponse.user))
+      navigate("/conversations");
+    }
+  }, [isSuccess, registerResponse]);
 
   return (
     <StyledRegisterPage className="RegisterPage">
@@ -78,9 +106,23 @@ const RegisterPage = () => {
               </Badge>
             </Box>
             <Typography variant="h6">Create Account</Typography>
-            <TextField type="text" label="Username" variant="outlined" autoComplete="off" />
-            <TextField type="password" label="Password" variant="outlined" autoComplete="off" />
-            <Button variant="contained" size="large">
+            <TextField
+              type="text"
+              label="Username"
+              variant="outlined"
+              autoComplete="off"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              type="password"
+              label="Password"
+              variant="outlined"
+              autoComplete="off"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button variant="contained" size="large" onClick={handleRegister}>
               Register
             </Button>
             <Typography>
