@@ -2,12 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IUser {
     _id?: string;
-    id?: string;
-    name: string;
-    email: string;
+    username: string;
     password: string;
     image?: string;
-    imageThumb?: string;
     createdAt: Date;
     updatedAt: Date;
 }
