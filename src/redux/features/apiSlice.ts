@@ -48,7 +48,9 @@ export const backendApi = createApi({
   }),
 });
 export const {
-  
+  useGetMyProfileQuery,
+  useLoginUserMutation,
+  useRegisterUserMutation,
 } = backendApi;
 
 export default backendApi;
