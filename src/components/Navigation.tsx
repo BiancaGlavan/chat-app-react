@@ -1,6 +1,8 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
+import UserDropdown from "./UserDropdown";
 
 const StyledNavigation = styled("div")`
   padding: 10px;
@@ -39,6 +41,12 @@ const StyledNavigation = styled("div")`
 `;
 
 const Navigation = () => {
+  const authState = useAppSelector((state) => state.auth);
+
+  const handleLogout = () => {
+
+  }
+
   return (
     <StyledNavigation className="Navigation">
       <Container className="navigation-container">
@@ -49,14 +57,24 @@ const Navigation = () => {
           </Typography>
         </Box>
         <Box className="menu-links">
-          <Link to={"/"}>
-            <Button className="btn-link" >
-              Join
-            </Button>
-          </Link>
-          <Link to={"/login"}>
-            <Button className="btn-link">Login</Button>
-          </Link>
+          {!authState.isAuth && (
+            <>
+              <Link to={"/"}>
+                <Button className="btn-link">Join</Button>
+              </Link>
+              <Link to={"/login"}>
+                <Button className="btn-link">Login</Button>
+              </Link>
+            </>
+          )}
+          {authState.isAuth && authState.user && (
+            <>
+               <Link to={"/conversations"}>
+                <Button className="btn-link">Chat</Button>
+              </Link>
+              <UserDropdown user={authState.user} onLogout={handleLogout}/>
+            </>
+          )}
         </Box>
       </Container>
     </StyledNavigation>

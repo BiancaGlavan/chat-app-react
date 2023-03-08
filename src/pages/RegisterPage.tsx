@@ -79,7 +79,6 @@ const RegisterPage = () => {
             </Box>
             <Typography variant="h6">Create Account</Typography>
             <TextField type="text" label="Username" variant="outlined" autoComplete="off" />
-            <TextField type="email" label="Email" variant="outlined" autoComplete="off" />
             <TextField type="password" label="Password" variant="outlined" autoComplete="off" />
             <Button variant="contained" size="large">
               Register
