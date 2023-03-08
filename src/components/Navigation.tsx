@@ -1,7 +1,8 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../redux/features/authSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import UserDropdown from "./UserDropdown";
 
 const StyledNavigation = styled("div")`
@@ -42,9 +43,12 @@ const StyledNavigation = styled("div")`
 
 const Navigation = () => {
   const authState = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-
+    dispatch(logout());
+    navigate("/");
   }
 
   return (
